@@ -21,3 +21,6 @@ Thumbs.db
 # 環境ファイル
 .env
 .env.*
+
+# Playwright Auth Storage
+storage/auth.json

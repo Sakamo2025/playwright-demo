@@ -1,3 +1,4 @@
+# yaml-language-server: disable
 name: Playwright Tests
 
 on:
@@ -25,6 +26,14 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
+      # 👇 ここで Secrets に保存したログイン情報を利用して認証済み状態を作る
+      - name: Setup authentication storage
+        run: npx playwright test tests/setup-auth.ts --project=chromium
+        env:
+          LOGIN_EMAIL: ${{ secrets.LOGIN_EMAIL }}
+          LOGIN_PASSWORD: ${{ secrets.LOGIN_PASSWORD }}
+
+      # 👇 生成された storage/auth.json を使って本テストを実行
       - name: Run Playwright tests
         run: npx playwright test
         env:

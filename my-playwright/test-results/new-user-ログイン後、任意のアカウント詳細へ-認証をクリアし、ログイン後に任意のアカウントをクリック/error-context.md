@@ -1,0 +1,50 @@
+# Page snapshot
+
+```yaml
+- dialog "新規ユーザー作成":
+  - heading "新規ユーザー作成" [level=2]
+  - button "閉じる":
+    - img
+  - text: 施設
+  - textbox "施設名を入力して検索"
+  - button "牧野クリニック"
+  - button "丸亀メンタルクリニックソフィア"
+  - button "A病院無償施設"
+  - button "A病院有償施設"
+  - button "アメリカパビリオン（再追加）"
+  - button "水野クリニック"
+  - button "（10/7）Win-dev施設"
+  - button "サブスクなし紐付け用の施設"
+  - button "関西パビリオン用施設"
+  - button "リグレッション用施設①"
+  - button "赤間 テスト"
+  - button "安部テスト2"
+  - button "小向リハビリクリニック"
+  - button "(dev)nomura"
+  - button "clinicmizuki"
+  - button "安部テスト1"
+  - button "奥田テスト"
+  - button "akama test group"
+  - button "赤間 テスト内科"
+  - button "テスト施設C"
+  - button "テスト施設B"
+  - button "テスト施設A"
+  - button "aaaa"
+  - button "イタリアパビリオン"
+  - button "フランスパビリオン"
+  - button "アメリカパビリオン"
+  - button "藤田クリニック丸の内"
+  - button "上野クリニック"
+  - button "代々木クリニック"
+  - button "渋谷クリニック"
+  - button "文字制限確認文字制限確認"
+  - button "グループF"
+  - button "テスト組織"
+  - button "閉じる"
+  - text: 名前
+  - textbox "名前"
+  - text: メールアドレス
+  - textbox "メールアドレス"
+  - button "キャンセル"
+  - button "登録"
+```

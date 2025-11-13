@@ -14,7 +14,5 @@ test.describe('ログイン後、任意のアカウント詳細へ', () => {
 
     // ユーザー詳細ページが表示されることを確認
     await expect(page).toHaveURL(/.*\/admin\/users\/.*/);
-
-    await page.screenshot({ path: 'user-list.png', fullPage: true });
   });
 }); 

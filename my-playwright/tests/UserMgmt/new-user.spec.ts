@@ -25,13 +25,13 @@ test.describe('ログイン後、任意のアカウント詳細へ', () => {
     await modal.locator('input[placeholder="施設名を入力して検索"]').click();
 
     // ✅ 項目（例: アメリカパビリオン）をクリック
-    await page.getByRole('button', { name: 'アメリカパビリオン' }).click();
+    await page.getByRole('button', { name: 'アメリカパビリオン（再追加）' }).click();
 
     // ✅ ラベル「施設」のあるフォームブロックを起点にする
     const facilityBlock = page.locator('label:text("施設")').locator('..').locator('..');
 
     // ✅ その中の「選択中: アメリカパビリオン」を検証
-    await expect(facilityBlock.getByText('選択中: アメリカパビリオン')).toBeVisible();
+    await expect(facilityBlock.getByText('選択中: アメリカパビリオン（再追加）')).toBeVisible();
 
     // ✅ モーダル内の「名前」欄に入力
     await page.getByLabel('名前').fill('play wrighter');

@@ -112,7 +112,6 @@ test('ユーザー一覧から任意の行を開いて診察一覧の閲覧', as
   const results = page.locator('table tbody tr');
   await expect(results).toHaveCount(2);
   await page.waitForTimeout(3000);
-  await page.screenshot({ path: 'word-count.png', fullPage: true });
 
   // ✅ 検索ヒットした単語削除
   await page.getByRole('row', { name: '正しい単語 誤変換単語 作成日時' }).getByRole('checkbox').check();
@@ -127,7 +126,6 @@ test('ユーザー一覧から任意の行を開いて診察一覧の閲覧', as
   await page.getByRole('textbox', { name: '単語を検索' }).press('Enter');
   await page.waitForLoadState('networkidle');
   await expect(results).toHaveCount(4);
-  await page.screenshot({ path: 'word-count3.png', fullPage: true });
 
   // ✅ 辞書名更新
   await page.getByRole('link', { name: '辞書一覧へ戻る' }).click();

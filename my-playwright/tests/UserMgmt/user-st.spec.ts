@@ -64,7 +64,4 @@ test('任意ユーザーの要約テンプレートを開いて、プロンプ�
   });
   await page.locator('button:has-text("削除")').last().click();
   await page.waitForTimeout(1000);
-
-  await page.screenshot({ path: 'screenshots/user-st.png', fullPage: true });
-
 });

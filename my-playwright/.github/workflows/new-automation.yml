@@ -1,5 +1,4 @@
-# yaml-language-server: disable
-name: Playwright Tests
+name: Playwright CI
 
 on:
   push:
@@ -12,42 +11,36 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. ソースコード取得
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Node.js セットアップ
+      # 2. Node.js セットアップ
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      # クリーン・依存関係再インストール（テスト前）
+      # 3. クリーン・依存関係インストール
       - name: Clean and install dependencies
         run: |
           rm -rf node_modules
-          rm -rf playwright-report
           rm -rf .playwright
-          rm -f package-lock.json   # ← 追加
-          npm install               # ← npm ci ではなく install
+          rm -rf playwright-report
+          rm -f package-lock.json
+          npm install
 
-      # Playwright 用ブラウザをインストール
+      # 4. Playwright ブラウザをインストール
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      # 認証ストレージ生成
-      - name: Setup authentication storage
-        run: npx playwright test tests/setup-auth.ts --project=chromium
-        env:
-          LOGIN_EMAIL: ${{ secrets.LOGIN_EMAIL }}
-          LOGIN_PASSWORD: ${{ secrets.LOGIN_PASSWORD }}
-
-      # メインテスト実行
+      # 5. Playwright テスト実行
       - name: Run Playwright tests
-        run: npx playwright test --project=chromium --reporter=html
+        run: npx playwright test --reporter=html
         env:
           CI: true
 
-      # HTML レポートアップロード
+      # 6. HTML レポートをアップロード
       - name: Upload Playwright HTML report
         if: always()
         uses: actions/upload-artifact@v4
@@ -55,3 +48,4 @@ jobs:
           name: playwright-report
           path: ./playwright-report
           if-no-files-found: ignore
+

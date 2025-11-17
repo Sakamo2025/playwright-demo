@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ main ]
 
+env:
+  ACTIONS_STEP_DEBUG: true  # デバッグログ最大化
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -20,28 +23,43 @@ jobs:
         uses: actions/setup-node@v4
         with:
            node-version: 20
-           cache: "npm" # npm キャッシュ利用
+           cache: "npm"
 
-      # 3. npm キャッシュ破損対策（重要）
-      - name: Clean npm cache
-        run: npm cache clean --force
+      # 3. Node.js と npm 情報確認
+      - name: Node and npm info
+        run: |
+          node -v | tee node_version.txt
+          npm -v | tee npm_version.txt
+          npm list playwright 2>&1 | tee playwright_list.txt || echo "playwright not installed"
+          npm list @playwright/test 2>&1 | tee playwright_test_list.txt || echo "@playwright/test not installed"
 
-      # 4. 依存関係の完全クリーンインストール
-      - name: Clean and install dependencies
+      # 4. 古いモジュールとキャッシュ削除
+      - name: Clean old modules and cache
+        run: |
+          rm -rf ./my-playwright/node_modules
+          rm -rf ./my-playwright/.playwright
+          rm -rf ./my-playwright/playwright-report
+          rm -f ./my-playwright/package-lock.json
+          npm cache verify | tee npm_cache_verify.txt
+
+      # 5. Playwright インストール + 依存確認
+      - name: Install Playwright
         working-directory: ./my-playwright
         run: |
-          rm -rf node_modules
-          rm -rf .playwright
-          rm -rf playwright-report
-          rm -f package-lock.json
-          npm install playwright@1.46.2 @playwright/test@1.46.2
+          npm install playwright@1.46.2 @playwright/test@1.46.2 | tee npm_install_log.txt
+          npx playwright install --with-deps | tee playwright_install_log.txt
+          ls -R node_modules/playwright-core/lib/server/recorder | tee recorder_files.txt
 
-      # 4.5 Playwright ブラウザインストール
-      - name: Install Playwright browsers
+      # 6. モジュールロード確認
+      - name: Check Playwright modules
         working-directory: ./my-playwright
-        run: npx playwright install --with-deps
+        run: |
+          node -e "require('playwright'); console.log('playwright loaded')" 2>&1 | tee module_load_playwright.txt
+          node -e "require('@playwright/test'); console.log('@playwright/test loaded')" 2>&1 | tee module_load_test.txt
 
-      # 5. Playwright テスト実行
+      # 7. Playwright テスト実行（詳細ログ付き）
       - name: Run Playwright tests
         working-directory: ./my-playwright
-        run: npx playwright test --reporter=html
+        run: |
+          npx playwright test --reporter=html --verbose 2>&1 | tee playwright_test_log.txt
+

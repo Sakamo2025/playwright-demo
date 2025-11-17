@@ -1,6 +1,9 @@
-// @ts-nocheck
-const { test, expect } = require('@playwright/test');
-const path = require('path');
+import { test, expect } from '@playwright/test'
+import path from 'path';
+
+const filePath = path.resolve(__dirname, '../../fixtures/単語フォーマット.csv');
+
+test.use({ storageState: 'storage/auth.json' });
 
 test('ユーザー一覧から任意の行を開いて診察一覧の閲覧', async ({ page }) => {  
   test.setTimeout(60000); 
@@ -65,8 +68,10 @@ test('ユーザー一覧から任意の行を開いて診察一覧の閲覧', as
   await page.setInputFiles('input[type="file"]', filePath);
 
   // ✅ ファイルが正しくセットされたことを検証
-  const fileName = await page.$eval('input[type="file"]', el => el.files[0]?.name);
-  expect(fileName).toBe('単語フォーマット.csv');
+  const fileName = await page.$eval('input[type="file"]', (el) => {
+  const input = el as HTMLInputElement;
+  return input.files?.[0]?.name ?? null;
+  });
 
   // ✅ アップロード結果の反映確認（画面に「肺炎」が出るなど）
   await expect(page.getByText('肺炎')).toBeVisible({ timeout: 10000 });

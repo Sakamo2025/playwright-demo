@@ -1,10 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
 
-console.log(":めくったページ: config 読み込まれたよ！");
-
 export default defineConfig({
   testDir: 'tests',
-
+  testIgnore: ['admin_tests/**/*'], // 不要テストを無視
   projects: [
     {
       name: 'chromium',
@@ -18,9 +16,9 @@ export default defineConfig({
   timeout: 30000,
 
   use: {
-    baseURL: 'https://dev.d1x2fefh4glbva.amplifyapp.com/auth/sign-in',
+    baseURL: 'https://dev.d1x2fefh4glbva.amplifyapp.com',
     storageState: 'storage/auth.json',
-    headless: false,
+    headless: process.env.CI ? true : false, // CI ではヘッドレス
     screenshot: 'only-on-failure',
     video: 'on',
   },

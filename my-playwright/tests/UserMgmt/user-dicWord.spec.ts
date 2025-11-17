@@ -2,8 +2,6 @@
 const { test, expect } = require('@playwright/test');
 const path = require('path');
 
-test.use({ storageState: 'storage/auth.json' });
-
 test('ユーザー一覧から任意の行を開いて診察一覧の閲覧', async ({ page }) => {  
   test.setTimeout(60000); 
 

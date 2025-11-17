@@ -11,36 +11,37 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. ソースコード取得
+      # 1. ソース取得
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2. Node.js セットアップ
+      # 2. Node.js 設定
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      # 3. クリーン・依存関係インストール
+      # 3. 依存関係インストール
       - name: Clean and install dependencies
         run: |
           rm -rf node_modules
-          rm -rf .playwright
-          rm -rf playwright-report
           rm -f package-lock.json
-          npm install
+          npm ci
 
-      # 4. Playwright ブラウザをインストール
+      # 4. Playwright ブラウザの完全インストール
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '0'
 
       # 5. Playwright テスト実行
       - name: Run Playwright tests
         run: npx playwright test --reporter=html
         env:
           CI: true
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '0'
 
-      # 6. HTML レポートをアップロード
+      # 6. HTML レポートのアップロード
       - name: Upload Playwright HTML report
         if: always()
         uses: actions/upload-artifact@v4
@@ -48,4 +49,5 @@ jobs:
           name: playwright-report
           path: ./playwright-report
           if-no-files-found: ignore
+
 

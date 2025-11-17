@@ -28,7 +28,20 @@ jobs:
 
       # 4. 依存関係の完全クリーンインストール
       - name: Clean and install dependencies
+        working-directory: ./my-playwright
         run: |
           rm -rf node_modules
           rm -rf .playwright
           rm -rf playwright-report
+          rm -f package-lock.json
+          npm install playwright@1.46.2 @playwright/test@1.46.2
+
+      # 4.5 Playwright ブラウザインストール
+      - name: Install Playwright browsers
+        working-directory: ./my-playwright
+        run: npx playwright install --with-deps
+
+      # 5. Playwright テスト実行
+      - name: Run Playwright tests
+        working-directory: ./my-playwright
+        run: npx playwright test --reporter=html

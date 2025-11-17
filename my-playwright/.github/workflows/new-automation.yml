@@ -27,7 +27,8 @@ jobs:
           rm -rf node_modules
           rm -rf playwright-report
           rm -rf .playwright
-          npm ci
+          rm -f package-lock.json   # ← 追加
+          npm install               # ← npm ci ではなく install
 
       # Playwright 用ブラウザをインストール
       - name: Install Playwright browsers

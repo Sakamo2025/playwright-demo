@@ -45,7 +45,7 @@ jobs:
 
       # 7. テスト実行（storageState を使用）
       - name: Run Playwright tests
-        run: npx playwright test --reporter=html
+        run: xvfb-run npx playwright test tests/login.spec.ts --project=chromium --headed
         env:
           USERNAME: ${{ secrets.USERNAME }}
           PASSWORD: ${{ secrets.PASSWORD }}

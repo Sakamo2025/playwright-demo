@@ -2,9 +2,10 @@ name: Playwright CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, temp-fix-branch ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, temp-fix-branch ]
+
 
 jobs:
   test:
@@ -30,11 +31,26 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      # 5. テスト実行
+      # 5. storage フォルダ作成
+      - name: Prepare storage folder
+        run: mkdir -p storage
+
+      # 6. storageState を生成（自動ログイン）
+      - name: Generate storage state
+        run: |
+          npx playwright test tests/login.spec.ts --project=chromium --headed
+        env:
+          USERNAME: ${{ secrets.USERNAME }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+
+      # 7. テスト実行（storageState を使用）
       - name: Run Playwright tests
         run: npx playwright test --reporter=html
+        env:
+          USERNAME: ${{ secrets.USERNAME }}
+          PASSWORD: ${{ secrets.PASSWORD }}
 
-      # 6. HTML レポートアップロード
+      # 8. HTML レポートアップロード
       - name: Upload test report
         if: always()
         uses: actions/upload-artifact@v4

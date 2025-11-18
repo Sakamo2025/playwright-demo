@@ -1,10 +1,25 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-import { defineConfig } from '@playwright/test';
+import { defineConfig, devices } from '@playwright/test';
 import path from 'path';
 
 export default defineConfig({
   use: {
     storageState: path.resolve(__dirname, 'storage/auth.json'),
+    // ここに共通のブラウザ設定を追加できます
   },
+  projects: [
+    {
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'firefox',
+      use: { ...devices['Desktop Firefox'] },
+    },
+    {
+      name: 'webkit',
+      use: { ...devices['Desktop Safari'] },
+    },
+  ],
 });

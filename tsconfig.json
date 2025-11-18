@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    /* Node.js の型解決を有効化（これが一番重要） */
+    "moduleResolution": "node",
+
+    /* ESModule と CommonJS の共存を許可 */
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+
+    /* Node.js の組み込み変数を認識（__dirname など） */
+    "types": ["node", "playwright"],
+
+    /* 基本設定 */
+    "target": "ES2020",
+    "module": "CommonJS",
+    "strict": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true,
+
+    /* 出力しない（Playwrightでは不要） */
+    "noEmit": true
+  },
+  "include": [
+    "./tests/**/*.ts",
+    "./playwright.config.ts",
+    "./scripts/**/*.ts"
+  ],
+  "exclude": ["node_modules", "dist"]
+}

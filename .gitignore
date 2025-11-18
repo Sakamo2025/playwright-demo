@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # node_modules は必ず除外
 node_modules/
 
@@ -16,3 +17,9 @@ results/
 
 # 環境変数ファイル（存在する場合）
 .env
+=======
+# .gitignore にこの行があることを確認
+node_modules/
+
+*.code-workspace/
+>>>>>>> f307b4e (first commit)

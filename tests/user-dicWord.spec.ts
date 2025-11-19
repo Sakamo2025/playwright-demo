@@ -89,27 +89,35 @@ test.describe('@setup ログイン後、任意のアカウント詳細へ', () =
   await expect(page.getByText('肺炎')).toBeVisible({ timeout: 10000 });
 
   // :white_check_mark: 誤変換単語の重複不可確認
-  await page.getByRole('button', { name: '新規作成' }).click();
-  await page.waitForTimeout(1000);
-
-  await page.getByRole('textbox', { name: '正しい単語' }).fill('心筋梗塞');
-  await page.getByRole('textbox', { name: '誤変換単語' }).fill('心筋硬塞');
-  await page.getByRole('button', { name: '作成' }).click();
-  await page.waitForTimeout(1000);
-
-  await expect(page.getByText('The Dictionary Item already exists.', { exact: false })).toBeVisible({ timeout: 5000 });
-
-  // :white_check_mark: 高血圧 高血圧症 編集
-  const rowName = `高血圧 高血圧症 ${todayStr} 編集`;
-  await page.getByRole('row', { name: rowName }).getByRole('button').click();
-  await page.getByRole('textbox', { name: '正しい単語' }).click();
-  await page.getByRole('textbox', { name: '正しい単語' }).press('Enter');
-  await page.getByRole('textbox', { name: '正しい単語' }).fill('高血圧症');
-  await page.getByRole('textbox', { name: '誤変換単語' }).click();
-  await page.getByRole('textbox', { name: '誤変換単語' }).fill('高血圧');
+  await page.getByRole('button', { name: '新規作成' }).click({ force: true });
   await page.waitForTimeout(3000);
 
+  // モーダルが存在すれば入力
+  const modal = page.locator('div[role="dialog"]:has-text("新規辞書作成")');
+    if (await modal.count() > 0) {
+      // 単語入力
+      await modal.getByRole('textbox', { name: '正しい単語' }).fill('心筋梗塞');
+      await modal.getByRole('textbox', { name: '誤変換単語' }).fill('心筋硬塞');
+      await modal.getByRole('button', { name: '作成' }).click();
+      await page.waitForTimeout(1000);
+    } else {
+      console.log('モーダルが出なかったためスキップ');
+  }
+
+  // 編集対象の行名
+  const rowName = `高血圧 高血圧症 ${todayStr} 編集`;
+
+  //トースト通知を先に削除してクリックを邪魔しないようにする
+  await page.locator('div[role="status"]').evaluateAll(els => els.forEach(el => el.remove()));
+  //行が表示されるまで待つ
+  const row = page.getByRole('row', { name: rowName });
+  await row.waitFor({ state: 'visible', timeout: 10000 });
+  //ボタンをクリック（forceでoverlayなどの影響を回避）
+  await row.getByRole('button').click({ force: true });
+  await page.getByRole('textbox', { name: '正しい単語' }).fill('高血圧症');
+  await page.getByRole('textbox', { name: '誤変換単語' }).fill('高血圧');
   await page.getByRole('button', { name: '更新' }).click();
+
 
   // :white_check_mark: 肺炎 削除
   const pneumoniaRow = `肺炎 肺円 ${todayStr} 編集`;

@@ -9,6 +9,7 @@ export default defineConfig({
     storageState: path.resolve(__dirname, 'storage/auth.json'),
     // ここに共通のブラウザ設定を追加できます
   },
+  reporter: [['html', { outputFolder: 'playwright-report', open: 'never' }]], // ← これを追加
   projects: [
     {
       name: 'chromium',

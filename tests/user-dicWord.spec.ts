@@ -1,11 +1,18 @@
 import { test, expect } from '@playwright/test'
+import fs from 'fs';
 import path from 'path';
-
-const filePath = path.resolve(__dirname, '../../fixtures/単語フォーマット.csv');
 
 test.describe('@setup ログイン後、任意のアカウント詳細へ', () => {
   test('ユーザー一覧から任意の行を開いて診察一覧の閲覧', async ({ page }) => {  
-    test.setTimeout(60000); 
+  test.setTimeout(60000); 
+
+  const fixturesDir = path.resolve(__dirname, '../../fixtures');
+    if (!fs.existsSync(fixturesDir)) {
+      fs.mkdirSync(fixturesDir, { recursive: true });
+    }
+    const csvPath = path.join(fixturesDir, '単語フォーマット.csv');
+    const csvContent = '列1,列2,列3\n値1,値2,値3';
+    fs.writeFileSync(csvPath, csvContent, 'utf-8');
 
   // :white_check_mark: 今日の日付を生成
   const today = new Date();
@@ -143,6 +150,6 @@ test.describe('@setup ログイン後、任意のアカウント詳細へ', () =
   await page.getByRole('button', { name: '削除' }).click();
   await page.waitForLoadState('networkidle');
   await expect(page.getByText('playwright_新規辞書作成（更新）')).not.toBeVisible({ timeout: 10000 });
-  
+
   });
 });

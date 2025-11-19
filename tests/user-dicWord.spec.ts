@@ -11,7 +11,13 @@ test.describe('@setup ログイン後、任意のアカウント詳細へ', () =
       fs.mkdirSync(fixturesDir, { recursive: true });
     }
     const csvPath = path.join(fixturesDir, '単語フォーマット.csv');
-    const csvContent = '列1,列2,列3\n値1,値2,値3';
+    // CSV 内容を作成（ヘッダー付き）
+    const csvContent = `正しい単語,誤変換単語
+      心筋梗塞,心筋硬塞
+      高血圧,高血圧症
+      糖尿病,党尿病
+      腎不全,腎不然
+      肺炎,肺円`;
     fs.writeFileSync(csvPath, csvContent, 'utf-8');
 
   // :white_check_mark: 今日の日付を生成

@@ -4,7 +4,7 @@ test.describe('@setup ログイン後、任意のアカウント詳細へ', () =
     test('任意ユーザーの要約テンプレートを開いて、プロンプトの新規/編集/削除', async ({ page }) => {  
         test.setTimeout(60000); 
 
-        await page.goto('https://dev.d5q9i5ebfuc1x.amplifyapp.com/');
+        await page.goto('https://stg.d5q9i5ebfuc1x.amplifyapp.com/');
 
         // 「mac01」を含む行を探して「開く」ボタンをクリック
         await page.locator('tr', { hasText: 'mac01' }).click();

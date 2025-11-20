@@ -8,7 +8,7 @@ import { chromium } from '@playwright/test';
   const page = await context.newPage();
 
   // IAPにリダイレクトされる
-  await page.goto('https://dev.d5q9i5ebfuc1x.amplifyapp.com/', { waitUntil: 'domcontentloaded' });
+  await page.goto('https://stg.d5q9i5ebfuc1x.amplifyapp.com/', { waitUntil: 'domcontentloaded' });
 
   // ログインボタンをクリック
   await page.getByRole('button', { name: 'ログイン' }).click();

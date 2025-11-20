@@ -35,10 +35,12 @@ jobs:
         run: mkdir -p storage
 
       # 6. Secrets から storageState を復元
-      - name: Restore storage state
+      - name: Restore storageState
         run: |
-          echo "${{ secrets.STORAGE_STATE_BASE64 }}" | base64 --decode > storage/auth.json
-
+          mkdir -p storage
+          echo "$AUTH_JSON_BASE64" | base64 --decode > storage/auth.json
+        env:
+          AUTH_JSON_BASE64: ${{ secrets.AUTH_JSON_BASE64 }}
 
       # 7. 通常テスト実行
       - name: Run Playwright tests

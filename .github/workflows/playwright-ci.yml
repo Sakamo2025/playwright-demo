@@ -34,12 +34,10 @@ jobs:
       - name: Prepare storage folder
         run: mkdir -p storage
 
-      # 6. storageState を生成（自動ログイン）
-      - name: Generate storage state
-        run: npx playwright test tests/UserMgmt/setupStorage.spec.ts --project=chromium --grep "@setup"
-        env:
-          USERNAME: ${{ secrets.USERNAME }}
-          PASSWORD: ${{ secrets.PASSWORD }}
+      # 6. Secrets から storageState を復元
+      - name: Restore storage state
+        run: |
+          echo "${{ secrets.STORAGE_STATE_BASE64 }}" | base64 --decode > storage/auth.json
 
 
       # 7. 通常テスト実行

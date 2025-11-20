@@ -36,7 +36,7 @@ jobs:
 
       # 6. storageState を生成（自動ログイン）
       - name: Generate storage state
-        run: npx playwright test tests/UserMgmt --project=chromium --grep "@setup" --storage-state=storage/state.json
+        run: npx playwright test tests/UserMgmt/setupStorage.spec.ts --project=chromium
         env:
           USERNAME: ${{ secrets.USERNAME }}
           PASSWORD: ${{ secrets.PASSWORD }}

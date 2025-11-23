@@ -40,7 +40,7 @@ test('ユーザー一覧から任意の行を開いてLLM/プロンプト/所属
   // === サブスクリプション設定 ===
   await page.getByRole('button', { name: 'サブスクリプションを作成する' }).click();
   await page.getByRole('button', { name: 'プランを選択' }).click();
-  await page.getByText('poepoe').first().click();
+  await page.getByText('テストプラン').first().click();
 
   await page.getByRole('textbox', { name: '開始日' }).fill('2025-07-01');
   await page.getByRole('textbox', { name: '終了日' }).fill('2026-09-30');

@@ -44,7 +44,7 @@ jobs:
 
       # 7. 通常テスト実行
       - name: Run Playwright tests
-        run: npx playwright test tests/UserMgmt --project=chromium --grep "@setup"
+        run: npx playwright test tests/** --project=chromium --grep "@setup"
         env:
           USERNAME: ${{ secrets.USERNAME }}
           PASSWORD: ${{ secrets.PASSWORD }}

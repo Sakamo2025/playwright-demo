@@ -1,15 +1,18 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 import { defineConfig, devices } from '@playwright/test';
-import path from 'path';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';   // ←これが必須
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export default defineConfig({
   use: {
-    headless: true,  // ← ここを追加
+    headless: true,
     storageState: path.resolve(__dirname, 'storage/auth.json'),
-    // ここに共通のブラウザ設定を追加できます
   },
-  reporter: [['html', { outputFolder: 'playwright-report', open: 'never' }]], // ← これを追加
+  reporter: [['html', { outputFolder: 'playwright-report', open: 'never' }]],
   projects: [
     {
       name: 'chromium',

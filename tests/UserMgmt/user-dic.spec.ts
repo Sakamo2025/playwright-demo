@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test'
 
 test.describe('@setup ログイン後、任意のアカウント詳細へ', () => {
-    test('ユーザー一覧から任意の行を開いて診察一覧の閲覧', async ({ page }) => {
+    test('アカウント詳細からユーザー辞書一覧へ移動し、辞書の更新', async ({ page }) => {
         test.setTimeout(60000);
 
         // :white_check_mark: 今日の日付を生成

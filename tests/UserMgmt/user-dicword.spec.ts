@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-test.describe('@dictionary ユーザー辞書のCRUD + CSV + 検索 全体E2E', () => {
+test.describe('@setup ユーザー辞書のCRUD + CSV + 検索 全体E2E', () => {
 
   // CI 運用を考えて長めに
   test.setTimeout(120000);

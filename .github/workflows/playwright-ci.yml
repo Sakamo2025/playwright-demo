@@ -7,7 +7,7 @@ on:
     branches: [ main, temp-fix-branch ]
 
   schedule:
-    - cron: '45 7 * * *'  # 16:45 JST
+    - cron: '00 8 * * *'  # 16:45 JST
   workflow_dispatch:
 
 jobs:

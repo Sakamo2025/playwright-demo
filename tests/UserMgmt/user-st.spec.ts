@@ -1,4 +1,5 @@
-import { test, expect } from '@playwright/test'
+import { test } from '../fixtures.ts';
+import { expect } from '@playwright/test';
 
 test.describe('@setup ログイン後、任意のアカウント詳細へ', () => {
     test('任意ユーザーの要約テンプレートを開いて、プロンプトの新規/編集/削除', async ({ page }) => {  

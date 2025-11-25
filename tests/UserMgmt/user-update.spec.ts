@@ -1,4 +1,5 @@
-import { test, expect } from '@playwright/test'
+import { test } from '../fixtures.ts';
+import { expect } from '@playwright/test';
 
 test.describe('@setup ログイン後、任意のアカウント詳細へ', () => {
     test('ユーザー一覧から任意の行を開いてLLM/プロンプト/所属施設/サブスク設定などを操作', async ({ page }) => {

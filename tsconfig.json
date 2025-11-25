@@ -1,23 +1,24 @@
 {
   "compilerOptions": {
-    "moduleResolution": "NodeNext",
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "types": ["node", "playwright"],
-
     "target": "ES2020",
     "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+
     "strict": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+
     "resolveJsonModule": true,
     "isolatedModules": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
 
-    /* ★ 追加ここから */
+    "types": ["node", "playwright"],
+
+    /* 追加すると安定する */
     "skipLibCheck": true,
     "moduleDetection": "force",
     "allowImportingTsExtensions": true
-    /* ★ 追加ここまで */
   },
   "include": [
     "./tests/**/*.ts",

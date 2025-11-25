@@ -1,4 +1,5 @@
-import { test, expect } from '@playwright/test';
+import { test } from '../fixtures.ts';
+import { expect } from '@playwright/test';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';

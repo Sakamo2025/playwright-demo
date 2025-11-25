@@ -1,4 +1,5 @@
-import { test, expect } from '@playwright/test';
+import { test } from '../fixtures.ts';
+import { expect } from '@playwright/test';
 
 test.describe('@setup ログイン後、グループ一覧へ', () => {
     test('グループ一覧_全体フロー', async ({ page }) => {

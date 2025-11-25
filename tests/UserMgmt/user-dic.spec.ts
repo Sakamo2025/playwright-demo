@@ -1,4 +1,5 @@
-import { test, expect } from '@playwright/test'
+import { test } from '../fixtures.ts';
+import { expect } from '@playwright/test';
 
 test.describe('@setup ログイン後、任意のアカウント詳細へ', () => {
     test('アカウント詳細からユーザー辞書一覧へ移動し、辞書の更新', async ({ page }) => {

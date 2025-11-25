@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-
-import { defineConfig, devices } from '@playwright/test';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';   // ←これが必須
+import { defineConfig, devices } from '@playwright/test';
+import { fileURLToPath } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -10,7 +8,7 @@ const __dirname = path.dirname(__filename);
 export default defineConfig({
   use: {
     headless: true,
-    storageState: path.resolve(__dirname, 'storage/auth.json'),
+    storageState: path.resolve(__dirname, './storage/auth.json'), // ← これでOK
   },
   reporter: [['html', { outputFolder: 'playwright-report', open: 'never' }]],
   projects: [

@@ -7,7 +7,7 @@ on:
     branches: [ main, temp-fix-branch ]
 
   schedule:
-    - cron: '45 3 * * 2'  # 毎週火曜 12:45 (JST)
+    - cron: '00 4 * * 2'  # 毎週火曜 13:00 (JST)
   workflow_dispatch:
 
 jobs:

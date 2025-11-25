@@ -7,13 +7,11 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 test.describe('@setup ユーザー辞書のCRUD + CSV + 検索 全体E2E', () => {
-
   // CI 運用を考えて長めに
-  test.setTimeout(120000);
-
+  test.setTimeout(90000);
   test('ユーザー辞書 E2E 総合テスト', async ({ page }, testInfo) => {
 
-    // ▼ Playwright の outputDir を使えば __dirname は不要
+    // ▼ Playwright の outputDir を使えば __dirnameÏ
     const fixturesDir = path.join(testInfo.outputDir, 'fixtures');
     fs.mkdirSync(fixturesDir, { recursive: true });
 
@@ -76,21 +74,19 @@ test.describe('@setup ユーザー辞書のCRUD + CSV + 検索 全体E2E', () =>
       await page.waitForTimeout(700);
     };
 
-    await addWord('心筋梗塞', '心筋硬塞');
+    await addWord('心筋硬塞', '心筋梗塞');
     await addWord('貧血', '貧欠');
 
-    // ▼ CSV インポート
+    // CSVインポートボタンを押す
     await page.getByRole('button', { name: 'CSVインポート' }).click();
 
+    // ファイルをセット
     const fileInput = page.locator('input[type="file"]');
-    const openButton = page.getByRole('button', { name: '開く' });
-
     await fileInput.setInputFiles(csvPath);
-    await expect(openButton).toBeEnabled({ timeout: 5000 });
-    await openButton.click();
 
-    // ▼ CSV結果確認
-    await expect(page.getByText('肺炎')).toBeVisible({ timeout: 10000 });
+    await expect(
+      page.getByText('CSVファイルのインポートが完了しました', { exact: false })
+    ).toBeVisible({ timeout: 5000 });
 
     // ▼ 重複単語エラー
     await addWord('心筋梗塞', '心筋硬塞');

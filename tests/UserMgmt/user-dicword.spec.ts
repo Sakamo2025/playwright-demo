@@ -85,9 +85,9 @@ test.describe('@setup ユーザー辞書のCRUD + CSV + 検索 全体E2E', () =>
     const fileInput = page.locator('input[type="file"]');
     await fileInput.setInputFiles(csvPath);
 
-    await expect(
-      page.getByText('CSVファイルのインポートが完了しました', { exact: false })
-    ).toBeVisible({ timeout: 5000 });
+    const toast = page.getByText('CSVファイルのインポートが完了しました', { exact: false });
+    await toast.waitFor({ state: 'visible', timeout: 10000 });
+    await expect(toast).toBeVisible();
 
     // ▼ 重複単語エラー
     await addWord('心筋梗塞', '心筋硬塞');

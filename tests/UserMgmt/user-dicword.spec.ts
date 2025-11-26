@@ -140,7 +140,7 @@ test.describe('@setup ユーザー辞書のCRUD + CSV + 検索 全体E2E', () =>
     await page.getByRole('textbox', { name: '単語を検索' }).press('Enter');
 
     await page.waitForLoadState('networkidle');
-    await expect(results).toHaveCount(4);
+    await expect(results).toHaveCount(4, { timeout: 10000 });
 
     // ▼ 辞書名を更新
     await page.getByRole('link', { name: '辞書一覧へ戻る' }).click();

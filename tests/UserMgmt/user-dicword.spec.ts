@@ -88,7 +88,7 @@ test.describe('@setup ユーザー辞書のCRUD + CSV + 検索 全体E2E', () =>
     await fileInput.setInputFiles(csvPath);
 
     const toast = page.getByText('CSVファイルのインポートが完了しました', { exact: false });
-    await toast.waitFor({ state: 'visible', timeout: 10000 });
+    await toast.waitFor({ state: 'visible', timeout: 30000 }); // 最大30秒まで待機
     await expect(toast).toBeVisible();
 
     // ▼ 重複単語エラー

@@ -72,7 +72,7 @@ jobs:
             }
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-          SLACK_COLOR: ${{ job.status == 'success' ? 'good' : 'danger' }}
+          SLACK_COLOR: ${{ job.status == 'success' && 'good' || 'danger' }}
           SLACK_MESSAGE: >-
             *▶ Playwright Test Results*
             - Status: *${{ job.status }}*

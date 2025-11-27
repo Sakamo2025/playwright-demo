@@ -107,5 +107,6 @@ test.describe('@setup ログイン後、グループ一覧へ', () => {
         await page.getByRole('textbox', { name: '氏名・メールアドレスで検索' }).fill('ユーザー04');
         await page.getByRole('button', { name: 'Playwrightユーザー04_グループサブスクあり' }).click();
         await page.getByRole('button', { name: '更新' }).click();
+        
     });
 });

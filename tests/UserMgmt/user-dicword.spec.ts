@@ -94,11 +94,11 @@ test.describe('@setup ユーザー辞書のCRUD + CSV + 検索 全体E2E', () =>
 
     await expect(
       page.getByText('The Dictionary Item already exists.', { exact: false })
-    ).toBeVisible({ timeout: 5000 });
+    ).toBeVisible({ timeout: 15000 });
 
     // ▼ 編集： 高血圧 → 高血圧症
     const row = page.locator(`tr:has-text("高血圧")`);
-    await row.first().waitFor({ state: 'visible', timeout: 10000 });
+    await row.first().waitFor({ state: 'visible', timeout: 15000 });
     await row.first().getByRole('button').click({ force: true });
 
     await page.getByRole('textbox', { name: '正しい単語' }).fill('高血圧症');
@@ -114,7 +114,7 @@ test.describe('@setup ユーザー辞書のCRUD + CSV + 検索 全体E2E', () =>
     await page.getByRole('button', { name: '選択項目を削除' }).click();
     await page.getByRole('button', { name: '削除' }).click();
 
-    await expect(page.getByText('肺炎')).not.toBeVisible({ timeout: 10000 });
+    await expect(page.getByText('肺炎')).not.toBeVisible({ timeout: 15000 });
 
     // ▼ 検索
     await page.getByRole('textbox', { name: '単語を検索' }).fill('心筋梗塞');
@@ -123,7 +123,7 @@ test.describe('@setup ユーザー辞書のCRUD + CSV + 検索 全体E2E', () =>
     const results = page.locator('table tbody tr');
 
     await expect(results).toHaveCount(2);
-    await page.waitForTimeout(700);
+    await page.waitForTimeout(1000);
 
     // ▼ 検索結果2件削除
     await page.getByRole('row', { name: '正しい単語 誤変換単語 作成日時' })

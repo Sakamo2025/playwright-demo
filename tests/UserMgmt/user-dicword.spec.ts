@@ -67,6 +67,7 @@ test.describe('@setup ユーザー辞書のCRUD + CSV + 検索 全体E2E', () =>
     const link = page.getByRole('link', { name: 'playwright_新規辞書作成' });
     await link.waitFor({ state: 'visible', timeout: 10000 });
     await link.click();
+    await page.waitForTimeout(3000);
 
     // ▼ 単語作成共通関数
     const addWord = async (correct: string, wrong: string) => {
@@ -86,7 +87,7 @@ test.describe('@setup ユーザー辞書のCRUD + CSV + 検索 全体E2E', () =>
     // ファイルをセット
     const fileInput = page.locator('input[type="file"]');
     await fileInput.setInputFiles(csvPath);
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(3000);
 
     // ▼ 重複単語エラー
     await addWord('心筋梗塞', '心筋硬塞');

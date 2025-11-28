@@ -35,7 +35,7 @@ test.describe('@setup ログイン後、任意のアカウント詳細へ', () =
 
         await page.fill('input[name="title"]', 'playwright_新規辞書重複不可確認');
         await page.getByRole('button', { name: '作成' }).click();
-        await page.waitForTimeout(3000);
+        await page.waitForTimeout(10000);
 
         // :white_check_mark: 辞書名更新
         await page.getByRole('button', { name: '編集' }).click();

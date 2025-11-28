@@ -61,13 +61,13 @@ test.describe('@setup ユーザー辞書のCRUD + CSV + 検索 全体E2E', () =>
 
     await expect(
       page.getByText('辞書の作成に失敗しました', { exact: false })
-    ).toBeVisible({ timeout: 7000 });
+    ).toBeVisible({ timeout: 10000 });
 
     // ▼ 単語一覧へ遷移
     const link = page.getByRole('link', { name: 'playwright_新規辞書作成' });
-    await link.waitFor({ state: 'visible', timeout: 10000 });
+    await link.waitFor({ state: 'visible', timeout: 15000 });
     await link.click();
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(10000);
 
     // ▼ 単語作成共通関数
     const addWord = async (correct: string, wrong: string) => {

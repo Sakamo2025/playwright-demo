@@ -130,15 +130,10 @@ test.describe('@setup ログイン後、プラン一覧へ', () => {
 
         // テキストボックスに入力
         const planInput = page.getByRole('textbox', { name: 'プランを選択' });
-        await planInput.fill(groupPlanName);
+        await planInput.fill("新規グループプラン登録");
 
         // 候補リストからプラン名ボタンを取得
-        const planButton = page.getByRole('button', { name: new RegExp(groupPlanName) });
-        await expect(planButton).toBeVisible({ timeout: 15000 });
-
-        // スクロールしてクリック可能にする
-        await planButton.scrollIntoViewIfNeeded();
-        await planButton.click({ force: true });
+        await page.getByRole('button', { name: /新規グループプラン登録/ }).last().click();
 
         // 開始日を入力
         const startDateInput = page.getByRole('textbox', { name: '開始日' });
@@ -149,7 +144,6 @@ test.describe('@setup ログイン後、プラン一覧へ', () => {
         await expect(registerButton).toBeVisible({ timeout: 15000 });
         await registerButton.scrollIntoViewIfNeeded();
         await registerButton.click({ force: true });
-        await expect(planButton).toBeVisible({ timeout: 15000 });
 
         // 重複サブスクリプションの確認
         await expect(

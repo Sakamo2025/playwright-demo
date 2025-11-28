@@ -48,6 +48,7 @@ jobs:
 
       # 7. 通常テスト実行
       - name: Run Playwright tests
+        id: run_tests   # ← 追加
         run: npx playwright test tests/** --project=chromium --grep "@setup"
         env:
           USERNAME: ${{ secrets.USERNAME }}
@@ -86,4 +87,4 @@ jobs:
             Workflow: *${{ github.workflow }}*
             Branch: *${{ github.ref_name }}*
             Run: <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View on GitHub>
-            Time: `${{ github.run_started_at }}`
+            Time: `${{ steps.run_tests.started_at }}`

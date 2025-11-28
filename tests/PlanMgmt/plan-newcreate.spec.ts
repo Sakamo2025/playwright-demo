@@ -129,16 +129,27 @@ test.describe('@setup ログイン後、プラン一覧へ', () => {
         await page.getByRole('button', { name: 'プランを選択' }).click();
 
         // テキストボックスに入力
-        await page.getByRole('textbox', { name: 'プランを選択' }).fill(groupPlanName);
+        const planInput = page.getByRole('textbox', { name: 'プランを選択' });
+        await planInput.fill(groupPlanName);
 
-        // 候補リストからプラン名ボタンをクリック
-        await page.getByRole('button', { name: new RegExp(groupPlanName) }).click();
+        // 候補リストからプラン名ボタンを取得
+        const planButton = page.getByRole('button', { name: new RegExp(groupPlanName) });
+        await expect(planButton).toBeVisible({ timeout: 15000 });
 
+        // スクロールしてクリック可能にする
+        await planButton.scrollIntoViewIfNeeded();
+        await planButton.click({ force: true });
 
-        await page.getByRole('textbox', { name: '開始日' }).fill(todayStr);
+        // 開始日を入力
+        const startDateInput = page.getByRole('textbox', { name: '開始日' });
+        await startDateInput.fill(todayStr);
 
-        // 登録ボタン押下
-        await page.locator('button.btn.btn-primary:has-text("登録")').click();
+        // 登録ボタン
+        const registerButton = page.locator('button.btn.btn-primary:has-text("登録")');
+        await expect(registerButton).toBeVisible({ timeout: 15000 });
+        await registerButton.scrollIntoViewIfNeeded();
+        await registerButton.click({ force: true });
+        await expect(planButton).toBeVisible({ timeout: 15000 });
 
         // 重複サブスクリプションの確認
         await expect(

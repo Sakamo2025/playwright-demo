@@ -80,6 +80,7 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_COLOR: ${{ steps.slack_message.outputs.color }}
           SLACK_TITLE: "▶ Playwright Test Results"
+          SLACK_USE_MARKDOWN: true
           SLACK_MESSAGE: |
             Status: *${{ steps.slack_message.outputs.msg }}*
             Workflow: *${{ github.workflow }}*

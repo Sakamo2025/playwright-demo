@@ -81,7 +81,7 @@ jobs:
           SLACK_COLOR: ${{ steps.slack_message.outputs.color }}
           SLACK_MESSAGE: |
             *▶ Playwright Test Results*
-            - Status: *${{ job.status }}*
+            - Status: ${{ steps.slack_message.outputs.msg }}
             - Workflow: *${{ github.workflow }}*
             - Branch: *${{ github.ref_name }}*
             - Run: <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View on GitHub>

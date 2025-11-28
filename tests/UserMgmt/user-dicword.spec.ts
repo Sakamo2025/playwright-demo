@@ -93,12 +93,22 @@ test.describe('@setup ユーザー辞書のCRUD + CSV + 検索 全体E2E', () =>
     await addWord('心筋梗塞', '心筋硬塞');
     await page.waitForTimeout(10000);
 
-    // ▼ 編集： 高血圧 → 高血圧症
-    await page.waitForLoadState('networkidle');
+    // ▼ 検索・編集： 高血圧 → 高血圧症
+    await page.getByRole('textbox', { name: '単語を検索' }).fill('高血圧');
+    await page.getByRole('textbox', { name: '単語を検索' }).press('Enter');
     const row = page.locator('tr:has-text("高血圧")');
-    await expect(row.first()).toBeVisible({ timeout: 60000 });
-    await row.first().getByRole('button', { name: '編集' }).click({ force: true });
+    await page.waitForTimeout(3000);
 
+    // ▼ 対象行を取得、行が存在するかのチェック
+    const targetRow = page.locator('tr').filter({ hasText: '高血圧' }).first();
+    await expect(targetRow).toHaveCount(1);  // 0ならテストデータが無い
+
+    // ▼ 対象の編集ボタンをクリック
+    const editButton = targetRow.getByRole('button', { name: '編集' });
+    await expect(editButton).toBeVisible({ timeout: 15000 });
+    await editButton.click({ force: true });
+
+    // ▼ 単語の更新
     await page.getByRole('textbox', { name: '正しい単語' }).fill('高血圧症');
     await page.getByRole('textbox', { name: '誤変換単語' }).fill('高血圧');
     await page.getByRole('button', { name: '更新' }).click();

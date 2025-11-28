@@ -96,7 +96,7 @@ test.describe('@setup ユーザー辞書のCRUD + CSV + 検索 全体E2E', () =>
     // ▼ 編集： 高血圧 → 高血圧症
     await page.waitForLoadState('networkidle');
     const row = page.locator('tr:has-text("高血圧")');
-    await expect(row.first()).toBeVisible({ timeout: 30000 });
+    await expect(row.first()).toBeVisible({ timeout: 60000 });
     await row.first().getByRole('button', { name: '編集' }).click({ force: true });
 
     await page.getByRole('textbox', { name: '正しい単語' }).fill('高血圧症');

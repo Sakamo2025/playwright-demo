@@ -66,10 +66,10 @@ jobs:
         id: slack_message
         run: |
           if [ "${{ job.status }}" = "success" ]; then
-            echo "msg=✅ Playwright Test Succeeded" >> $GITHUB_OUTPUT
+            echo "msg=✅ Playwright Tests Passed" >> $GITHUB_OUTPUT
             echo "color=good" >> $GITHUB_OUTPUT
           else
-            echo "msg=❌ Playwright Test Failed" >> $GITHUB_OUTPUT
+            echo "msg=❌ Playwright Tests Failed" >> $GITHUB_OUTPUT
             echo "color=danger" >> $GITHUB_OUTPUT
           fi
 
@@ -79,10 +79,10 @@ jobs:
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_COLOR: ${{ steps.slack_message.outputs.color }}
+          SLACK_TITLE: "▶ Playwright Test Results"
           SLACK_MESSAGE: |
-            *▶ Playwright Test Results*
-            - Status: ${{ steps.slack_message.outputs.msg }}
-            - Workflow: *${{ github.workflow }}*
-            - Branch: *${{ github.ref_name }}*
-            - Run: <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View on GitHub>
-            - Time: '${{ github.run_started_at }}'
+            Status: *${{ steps.slack_message.outputs.msg }}*
+            Workflow: *${{ github.workflow }}*
+            Branch: *${{ github.ref_name }}*
+            Run: <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View on GitHub>
+            Time: `${{ github.run_started_at }}`

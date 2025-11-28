@@ -38,7 +38,7 @@ test.describe('@setup ログイン後、任意のアカウント詳細へ', () =
         await page.waitForTimeout(10000);
 
         // :white_check_mark: 辞書名更新
-        await page.getByRole('button', { name: '編集' }).click();
+        await page.getByRole('button', { name: '編集' }).nth(0).click();
         await page.getByRole('textbox', { name: '辞書名' }).click();
         await page.getByRole('textbox', { name: '辞書名' }).fill('playwright_新規辞書作成（更新）');
         await page.getByRole('button', { name: '更新' }).click();

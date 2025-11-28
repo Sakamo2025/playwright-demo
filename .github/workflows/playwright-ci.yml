@@ -86,8 +86,3 @@ jobs:
             - Branch: *${{ github.ref_name }}*
             - Run: <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View on GitHub>
             - Time: '${{ github.run_started_at }}'
-        with:
-          payload: |
-            {
-              "text": "${{ steps.slack_message.outputs.msg }}"
-            }

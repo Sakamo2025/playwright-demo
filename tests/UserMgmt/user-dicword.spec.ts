@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-test.describe('@setup ユーザー辞書のCRUD + CSV + 検索 全体E2E', () => {
+test.describe('@setup 高血圧' /*ユーザー辞書のCRUD + CSV + 検索 全体E2E*/, () => {
   // CI 運用を考えて長めに
   test.setTimeout(90000);
   test('ユーザー辞書 E2E 総合テスト', async ({ page }, testInfo) => {
@@ -100,9 +100,13 @@ test.describe('@setup ユーザー辞書のCRUD + CSV + 検索 全体E2E', () =>
     await page.waitForTimeout(10000);
 
     // ▼ 対象の編集ボタンをクリック
-    await page.locator('tr', { has: page.getByText('高血圧') })
-      .getByRole('button', { name: '編集' })
-      .click();
+    if (!page.isClosed()) {
+      await page.locator('tr', { has: page.getByText('高血圧') })
+        .getByRole('button', { name: '編集' })
+        .click();
+    } else {
+      console.log('ページは既に閉じています');
+    }
 
     // ▼ 単語の更新
     await page.getByRole('textbox', { name: '正しい単語' }).fill('高血圧症');

@@ -41,8 +41,9 @@ test.describe('@setup 高血圧' /*ユーザー辞書のCRUD + CSV + 検索 全�
     });
 
     // ▼ ユーザーの1行クリック
-    await page.locator('tr:has-text("ユーザー辞書01")').click();
-    await page.waitForTimeout(500);
+    const rowUser = page.locator('tr', { hasText: 'ユーザー辞書01' });
+    await rowUser.waitFor({ state: 'visible', timeout: 20000 });
+    await rowUser.click();
 
     // ▼ ユーザー辞書一覧
     await page.getByRole('link', { name: 'ユーザー辞書一覧' }).click();
@@ -96,7 +97,7 @@ test.describe('@setup 高血圧' /*ユーザー辞書のCRUD + CSV + 検索 全�
     // ▼ 検索・編集： 高血圧 → 高血圧症
     await page.getByRole('textbox', { name: '単語を検索' }).fill('高血圧');
     await page.getByRole('textbox', { name: '単語を検索' }).press('Enter');
-    const row = page.locator('tr:has-text("高血圧")');
+    const rowWord = page.locator('tr:has-text("高血圧")');
     await page.waitForTimeout(10000);
 
     // ▼ 対象の編集ボタンをクリック

@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-test.describe.serial('@setup' /*ユーザー辞書のCRUD + CSV + 検索 全体E2E*/, () => {
+test.describe.serial('@setup 高血圧' /*ユーザー辞書のCRUD + CSV + 検索 全体E2E*/, () => {
   // CI 運用を考えて長めに
   test.setTimeout(90000);
   test('ユーザー辞書 E2E 総合テスト', async ({ page }, testInfo) => {

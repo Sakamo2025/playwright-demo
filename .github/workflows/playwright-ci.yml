@@ -48,7 +48,7 @@ jobs:
 
       # 7. 通常テスト実行
       - name: Run Playwright tests
-        id: run_tests   # ← 追加
+        id: run_tests
         run: npx playwright test tests/** --project=chromium --grep "@setup"
         env:
           USERNAME: ${{ secrets.USERNAME }}
@@ -64,14 +64,12 @@ jobs:
 
       # 9. 📢 Slack通知
       - name: Send Slack Notification
-        if: always()
-        uses: rtCamp/action-slack-notify@v2
+        if: always() # 成功/失敗どちらでも通知
+        uses: slackapi/slack-github-action@v1.27.0
+        with:
+          payload: |
+            {
+              "text": "${{ job.status == 'success' && '🟢 SUCCESS' || '🔴 FAILED' }} - Playwright CI\nBranch: ${{ github.ref_name }}\nCommit: ${{ github.sha }}\nURL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            }
         env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-          SLACK_COLOR: ${{ steps.slack_message.outputs.color }}
-          SLACK_TITLE: "▶ Playwright Test Results"
-          SLACK_USE_MARKDOWN: true
-          SLACK_MESSAGE: |
-            *${{ steps.slack_message.outputs.msg }}*
-            Branch: *${{ github.ref_name }}*
-            Result: <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View Details>
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

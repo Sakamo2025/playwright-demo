@@ -10,7 +10,9 @@ export default defineConfig({
     headless: true,
     storageState: path.resolve(__dirname, './storage/auth.json'), // ← これでOK
   },
-  reporter: [['html', { outputFolder: 'playwright-report', open: 'never' }]],
+  reporter: [
+    ['list'], // 👈 これ追加// 
+    ['html', { outputFolder: 'playwright-report', open: 'never' }]],
   projects: [
     {
       name: 'chromium',

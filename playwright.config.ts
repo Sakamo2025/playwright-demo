@@ -6,13 +6,19 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export default defineConfig({
+  // ▼★ここを追加（テストを直列にする）
+  workers: 1,
+
   use: {
     headless: true,
-    storageState: path.resolve(__dirname, './storage/auth.json'), // ← これでOK
+    storageState: path.resolve(__dirname, './storage/auth.json'),
   },
+
   reporter: [
-    ['list'], // 👈 これ追加// 
-    ['html', { outputFolder: 'playwright-report', open: 'never' }]],
+    ['list'],
+    ['html', { outputFolder: 'playwright-report', open: 'never' }],
+  ],
+
   projects: [
     {
       name: 'chromium',

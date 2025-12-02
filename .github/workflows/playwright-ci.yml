@@ -6,10 +6,6 @@ on:
   pull_request:
     branches: [ main, temp-fix-branch ]
 
-  schedule:
-    - cron: '15 9 * * *'  # 18:15 JST
-  workflow_dispatch:
-
 jobs:
   test:
     runs-on: ubuntu-latest
